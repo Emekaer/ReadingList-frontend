@@ -14,6 +14,7 @@ const AddBook = () => {
     const [name, setName] = useState('')
     const [genre, setGenre] = useState('')
     const [authorId, setAuthorId] = useState('')
+    const [errorMessage, setErrorMessage] = useState('')
 
     const { loading, error, data } = useQuery(getAuthorsQuery);
 
@@ -35,18 +36,30 @@ const AddBook = () => {
     const [addBook] = useMutation(addBookMutation)
     const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        addBook(
-            {
-                variables:
+        console.log(authorId)
+        if (!name || !genre || authorId === "Select author" || !authorId) {
+            if (!name) {
+                setErrorMessage("Please input a book name.")
+            } else if (!genre) {
+                setErrorMessage("Please input a book genre.")
+            } else if (!authorId) {
+                setErrorMessage("Please select a book author.")
+            }
+        } else {
+            setErrorMessage('')
+            addBook(
                 {
-                    name: name,
-                    genre: genre,
-                    authorId: authorId
-                },
-                refetchQueries: [{
-                    query: getBooksQuery
-                }]
-            })
+                    variables:
+                    {
+                        name: name,
+                        genre: genre,
+                        authorId: authorId
+                    },
+                    refetchQueries: [{
+                        query: getBooksQuery
+                    }]
+                })
+        }
 
     }
 
@@ -72,6 +85,8 @@ const AddBook = () => {
                     {displayAuthors()}
                 </select>
             </div>
+
+            <h4 className="error">{errorMessage}</h4>
 
             <button>+</button>
         </form>

@@ -17,7 +17,6 @@ const App = () => {
         <h1>ER's Reading List</h1>
         <BookList />
         <AddBook />
-
       </div>
     </ApolloProvider>
 

@@ -22,9 +22,6 @@ const BookDetails = (props: IProps) => {
         }
     })
 
-
-
-
     const bookDetails = () => {
 
         const book = data?.book
@@ -50,7 +47,6 @@ const BookDetails = (props: IProps) => {
         }
 
     }
-
     return (
         <div id="book-details">
             <p>Output book details here</p>
